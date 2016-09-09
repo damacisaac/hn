@@ -1,0 +1,17 @@
+<ul>
+  <%= for story <- @top_stories do %>
+    <li>
+      <div>
+        <%= story[:title] %>
+        <small>
+          (<a href=<%= story[:url] %>>url</a>)
+        </small>
+      </div>
+      <small>
+        <%= story[:score] %> points by <%= story[:by] %> at <%= story[:time] %>
+        | hide
+        | <a href="/item/<%= story[:id] %>">comments</a>
+      </small>
+    </li>
+  <% end %>
+</ul>
