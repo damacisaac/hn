@@ -17,10 +17,7 @@ defmodule Hn.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/news", PageController, :index
+    get "/item/:id", PageController, :show
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", Hn do
-  #   pipe_through :api
-  # end
 end

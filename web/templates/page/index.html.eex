@@ -1,17 +1,20 @@
-<ul>
+<ol>
   <%= for story <- @top_stories do %>
-    <li>
+    <li class="list-item">
       <div>
-        <%= story[:title] %>
+        <a href="<%= story[:url] %>">
+          <%= story[:title] %>
+        </a>
         <small>
-          (<a href=<%= story[:url] %>>url</a>)
+          (<a href="/from"><%= URI.parse(story[:url]).authority %></a>)
         </small>
       </div>
       <small>
         <%= story[:score] %> points by <%= story[:by] %> at <%= story[:time] %>
         | hide
-        | <a href="/item/<%= story[:id] %>">comments</a>
+        | <a href="/item/<%= story[:id] %>"><%= story[:descendants] %> comments</a>
       </small>
     </li>
   <% end %>
-</ul>
+</ol>
+<a href="/news?p=<%= @next_page %>">More</a>

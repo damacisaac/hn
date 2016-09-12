@@ -1,0 +1,14 @@
+<li class="list-item">
+  <small class="text-muted">
+    <%= @comment[:by] %> at <%= @comment[:time] %>
+    <span>[-]</span>
+  </small>
+  <div>
+    <%= raw(@comment[:text]) %>
+  </div>
+  <ul>
+    <%= for child <- @comment[:children] do %>
+      <%= render "_comment.html", comment: child %>
+    <% end %>
+  </ul>
+</li>

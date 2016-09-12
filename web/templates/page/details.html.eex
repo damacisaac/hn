@@ -1,0 +1,17 @@
+<div>
+  <header>
+    <%= @story[:title] %>
+    <small>
+      (<a href="/from"><%= URI.parse(@story[:url]).authority %></a>)
+    </small>
+  </header>
+  <small>
+    <%= @story[:score] %> points by <%= @story[:by] %> at <%= @story[:time] %>
+  </small>
+
+  <ul>
+    <%= for comment <- @comments do %>
+      <%= render "_comment.html", comment: comment %>
+    <% end %>
+  </ul>
+</div>

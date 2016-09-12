@@ -1,4 +1,4 @@
-# Hn
+# Elixir Hacker News Clone
 
 To start your Phoenix app:
 
