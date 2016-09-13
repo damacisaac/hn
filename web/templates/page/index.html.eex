@@ -1,13 +1,15 @@
 <ol>
-  <%= for story <- @top_stories do %>
-    <li class="list-item">
+  <%= for story <- @stories do %>
+    <li class="list-item list-title">
       <div>
         <a href="<%= story[:url] %>">
           <%= story[:title] %>
         </a>
+        <% if story[:url] do %>
         <small>
           (<a href="/from"><%= URI.parse(story[:url]).authority %></a>)
         </small>
+        <% end %>
       </div>
       <small>
         <%= story[:score] %> points by <%= story[:by] %> at <%= story[:time] %>

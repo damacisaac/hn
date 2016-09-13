@@ -15,9 +15,9 @@
     <div class="container">
       <header class="header">
         <nav role="navigation">
+          <img class="brand-image" src="<%= static_path(@conn, "/images/y18.gif") %>"/>
           <a href="/news" class="brand">Hacker News</a>
           <a href="/new">new</a> |
-          <a href="/comments">comments</a> |
           <a href="/show">show</a> |
           <a href="/ask">ask</a> |
           <a href="/jobs">jobs</a>

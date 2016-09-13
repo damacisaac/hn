@@ -18,6 +18,10 @@ defmodule Hn.Router do
 
     get "/", PageController, :index
     get "/news", PageController, :index
+    get "/new", PageController, :new
+    get "/jobs", PageController, :jobs
+    get "/ask", PageController, :ask
+    get "/show", PageController, :show
     get "/item/:id", PageController, :show
   end
 end

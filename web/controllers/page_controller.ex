@@ -3,50 +3,45 @@ defmodule Hn.PageController do
 
   use Hn.Web, :controller
 
-  def get_path_from_id(id) do
-    "item/" <> to_string(id)
-  end
-
-  def recursive_get_item_list(ids) do
-    if not is_list ids do
-      []
-    else
-      item_list = ids
-      |> Enum.map(fn id -> Hn.PageController.get_path_from_id(id) end)
-      |> Enum.map(fn path -> Hn.PageController.get_item(path) end)
-      |> Enum.map(fn item -> List.insert_at(item, 0, {:children, recursive_get_item_list(item[:kids])}) end)
-    end
-  end
-
-  def get_item(path) do 
-    result = HackerNews.get!(path).body
-    |> Enum.map(fn({k, v}) -> {String.to_atom(k), v} end)
-
-    result
+  def get_next_page(params) do
+    p = Dict.get(params, "p", "1")
+    {next_page, _} = Integer.parse(p)
+    next_page + 1
   end
 
   def index(conn, params) do
-    p = Dict.get(params, "p", "1")
-    {next_page, _} = Integer.parse(p)
-    next_page = next_page + 1
-
-    response = HackerNews.get! "topstories"
-
-    top_stories = response.body
-    |> Enum.slice(0..29)
-    |> Enum.map(fn id -> Hn.PageController.get_path_from_id(id) end)
-    |> Enum.map(fn path -> Hn.PageController.get_item(path) end)
-
-    render conn, "index.html", top_stories: top_stories, next_page: next_page 
+    next_page = Hn.PageController.get_next_page(params)
+    stories = HackerNews.get_top_stories()
+    render conn, "index.html", stories: stories, next_page: next_page 
   end
 
   def show(conn, %{"id" => id}) do
-    path = Hn.PageController.get_path_from_id(id)
-
-    story = get_item(path)
-
-    comments = Hn.PageController.recursive_get_item_list story[:kids]
-
+    story = HackerNews.get_details(id)
+    comments = HackerNews.recursive_get_item_list story[:kids]
     render conn, "details.html", story: story, comments: comments
+  end
+
+  def ask(conn, params) do
+    next_page = Hn.PageController.get_next_page(params)
+    stories = HackerNews.get_ask_stories()
+    render conn, "index.html", stories: stories, next_page: next_page 
+  end
+
+  def jobs(conn, params) do
+    next_page = Hn.PageController.get_next_page(params)
+    stories = HackerNews.get_job_stories()
+    render conn, "index.html", stories: stories, next_page: next_page 
+  end
+
+  def new(conn, params) do
+    next_page = Hn.PageController.get_next_page(params)
+    stories = HackerNews.get_new_stories()
+    render conn, "index.html", stories: stories, next_page: next_page 
+  end
+
+  def show(conn, params) do
+    next_page = Hn.PageController.get_next_page(params)
+    stories = HackerNews.get_show_stories()
+    render conn, "index.html", stories: stories, next_page: next_page 
   end
 end

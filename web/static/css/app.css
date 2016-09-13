@@ -32,6 +32,10 @@ a:hover {
   font-weight: bold;
 }
 
+.header .brand-image {
+  border: 1px solid white;
+}
+
 .header a {
   margin: 0 2px;
 }
@@ -71,4 +75,8 @@ small a:hover,
 
 .list-item small a:hover {
   text-decoration: underline;
+}
+
+.list-title {
+  line-height: 1.3;
 }
